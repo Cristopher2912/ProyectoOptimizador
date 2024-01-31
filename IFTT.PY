@@ -38,11 +38,20 @@ def monitor_cpu_usage():
         cpu_percent = psutil.cpu_percent(interval=1)
         with print_lock:
             print(f'Current CPU Usage: {cpu_percent}%')
-        if cpu_percent > 0.1:
+        # Check if CPU usage is above threshold and in specific zone
+        if cpu_percent > 0.1 and is_in_specific_zone():
             send_email(ifttt_subject, ifttt_body)
         time.sleep(5)  # Check every 5 seconds
+
+# Function to check if CPU usage is in a specific zone
+def is_in_specific_zone():
+    # Add your logic to determine if CPU usage is in specific zone
+    # For example, you can check if the current time is within a certain range
+    # or if the CPU usage is above a certain threshold
+    return True  # Modify this condition based on your requirement
 
 # Main function to start monitoring
 if __name__ == "__main__":
     cpu_monitor_thread = threading.Thread(target=monitor_cpu_usage)
     cpu_monitor_thread.start()
+
